@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "759726842563",
+    "project_id": "interviewapp-23b5b",
+    "storage_bucket": "interviewapp-23b5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759726842563:android:68b63fdd3e8156159ab876",
+        "android_client_info": {
+          "package_name": "com.AshutoshKhadse.interview_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO4YSYks110sXkill63d53Y1cD72vPr-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

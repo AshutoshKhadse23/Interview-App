@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'interview_bot_model.dart'; // The InterviewBot class
+
+void main() {
+  runApp(const InterviewBotApp());
+}
+
+class InterviewBotApp extends StatelessWidget {
+  const InterviewBotApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => InterviewBot(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: InterviewBotScreen(),
+      ),
+    );
+  }
+}
+
+class InterviewBotScreen extends StatelessWidget {
+  final TextEditingController _answerController = TextEditingController();
+
+  InterviewBotScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("InterviewBot - AI Interview Chatbot"),
+      ),
+      body: Consumer<InterviewBot>(
+        builder: (context, bot, child) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: bot.interviewStep,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Question: ${bot.questions[index]['text']}"),
+                          Text("Your Answer: ${bot.answers[index]['text']}"),
+                          const Divider(),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                if (bot.interviewStep < bot.questions.length) ...[
+                  Text("Question: ${bot.questions[bot.interviewStep]['text']}"),
+                  TextField(
+                    controller: _answerController,
+                    decoration: const InputDecoration(hintText: "Enter your answer"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      bot.getAnswer(_answerController.text);
+                      _answerController.clear();
+                    },
+                    child: const Text("Submit Answer"),
+                  ),
+                ] else ...[
+                  ElevatedButton(
+                    onPressed: () async {
+                      String evaluation = await bot.evaluateCandidate();
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: Text("Evaluation: $evaluation"),
+                          );
+                        },
+                      );
+                    },
+                    child: const Text("Finish Interview and Get Evaluation"),
+                  ),
+                ],
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

@@ -22,7 +22,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final model = GenerativeModel(
       model: 'gemini-pro',
       apiKey:
-          'AIzaSyAt6YBVTCCcDKBMclzg7tHZST-uIIEggEY'); // Replace with your actual API Key
+          'API KEY');
 
   final List<Message> _messages = [];
   List<String> _questions = [];
